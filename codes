@@ -203,6 +203,45 @@ public class Calculator {
 #19th
 docker build -t java-app .
 docker run -d -t java-app
+#16
+app.py
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+PORT = 5000
+
+class MyHandler(BaseHTTPRequestHandler):
+
+    def do_GET(self):
+        # Send response status
+        self.send_response(200)
+
+        # Send headers
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+
+        # Send response body
+        self.wfile.write(b"<h1>Hello from Python HTTP Server</h1>")
+        self.wfile.write(b"<p>This is running on port 5000</p>")
+
+
+if __name__ == "__main__":
+    server = HTTPServer(("0.0.0.0", PORT), MyHandler)
+    print(f"Server running on http://localhost:{PORT}")
+    server.serve_forever()
+docker build -t my-python-app
+docker run -d -p 5000:5000 my-python-app
+sample. py
+FROM python:3.9-slim
+
+WORKDIR /app
+
+COPY app.py .
+
+EXPOSE 5000
+
+CMD ["python", "app.py"]
+
+
 
 
 
