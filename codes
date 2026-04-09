@@ -330,3 +330,45 @@ class BankAccountTest {
         assertEquals("Withdrawal amount must be positive", exception.getMessage());
     }
 }
+#linear search
+public class LinearSearch {
+
+    public static int search(int[] arr, int key) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == key) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+#linear search junit
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+public class LinearSearchTest {
+
+    @Test
+    void testFound() {
+        int[] arr = {2, 4, 6, 8};
+        assertEquals(2, LinearSearch.search(arr, 6));
+    }
+
+    @Test
+    void testNotFound() {
+        int[] arr = {2, 4, 6, 8};
+        assertEquals(-1, LinearSearch.search(arr, 10));
+    }
+
+    @Test
+    void testFirst() {
+        int[] arr = {5, 10, 15};
+        assertEquals(0, LinearSearch.search(arr, 5));
+    }
+
+    @Test
+    void testLast() {
+        int[] arr = {5, 10, 15};
+        assertEquals(2, LinearSearch.search(arr, 15));
+    }
+}
