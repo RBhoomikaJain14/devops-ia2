@@ -204,6 +204,11 @@ public class Calculator {
 docker build -t java-app .
 docker run -d -t java-app
 #16
+docker build -t my-python-app
+docker images
+docker run my-python-app
+docker run -p 5000:5000 my-python-app
+browser
 app.py
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
