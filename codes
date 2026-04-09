@@ -240,8 +240,88 @@ COPY app.py .
 EXPOSE 5000
 
 CMD ["python", "app.py"]
+#bank code
+public class BankAccount {
+    private String accountNumber;
+    private double balance;
 
+    public BankAccount(String accountNumber, double initialBalance) {
+        this.accountNumber = accountNumber;
+        this.balance = initialBalance;
+    }
 
+    public String getAccountNumber() {
+        return accountNumber;
+    }
 
+    public double getBalance() {
+        return balance;
+    }
 
+    public void deposit(double amount) {
+        if(amount <= 0) {
+            throw new IllegalArgumentException("Deposit amount must be positive");
+        }
+        balance += amount;
+    }
 
+    public void withdraw(double amount) {
+        if(amount <= 0) {
+            throw new IllegalArgumentException("Withdrawal amount must be positive");
+        }
+        if(amount > balance) {
+            throw new IllegalArgumentException("Insufficient balance");
+        }
+        balance -= amount;
+    }
+}
+#bank code for junit
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class BankAccountTest {
+
+    private BankAccount account;
+
+    @BeforeEach
+    void setUp() {
+        account = new BankAccount("12345", 1000.0);
+    }
+
+    @Test
+    void testDeposit() {
+        account.deposit(500);
+        assertEquals(1500, account.getBalance());
+    }
+
+    @Test
+    void testDepositNegativeAmount() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            account.deposit(-100);
+        });
+        assertEquals("Deposit amount must be positive", exception.getMessage());
+    }
+
+    @Test
+    void testWithdraw() {
+        account.withdraw(400);
+        assertEquals(600, account.getBalance());
+    }
+
+    @Test
+    void testWithdrawMoreThanBalance() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            account.withdraw(2000);
+        });
+        assertEquals("Insufficient balance", exception.getMessage());
+    }
+
+    @Test
+    void testWithdrawNegativeAmount() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            account.withdraw(-50);
+        });
+        assertEquals("Withdrawal amount must be positive", exception.getMessage());
+    }
+}
