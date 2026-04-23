@@ -131,9 +131,16 @@ root@a5bcd24ecaee:/data# echo "Docker Volume Persistence Test" > test.txt
 cat /data/test.txt
 docker run -d -p 8086:80 -v myvolume:/usr/share/nginx/html nginx
 docker run -it -v myvolume:/data ubuntu bash
-root@6d481fb4ec88:/#  echo "<h1>Persistent web Page</h1>" /data/index.html
+root@6d481fb4ec88:/#  echo "<h1>Persistent web Page</h1>" > /data/index.html
 
-#exp12 calculatorInput
+18th 
+like 16th the files should be there then and put the path
+docker build -t java-app
+docker tag java-app bhoomikajain/java-app:v1
+docker push  bhoomikajain/java-app:v1
+docker run -it bhoomikajain/java-app:v1
+
+#exp12,11 calculatorInput(optional)
 import java.util.Scanner;
 
 class CalculatorInput {
@@ -153,52 +160,64 @@ class CalculatorInput {
     }
 }
 #calculatortest junit 
-package bnmit.org;
+package CalculatorProject;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 class CalculatorTest {
 
+    Calculator calc = new Calculator();
+
     @Test
     void testAdd() {
-        assertEquals(15, Calculator.add(10, 5));
+        assertEquals(15, calc.add(10, 5));
     }
 
     @Test
     void testSub() {
-        assertEquals(5, Calculator.sub(10, 5));
+        assertEquals(5, calc.sub(10, 5));
     }
 
     @Test
     void testMul() {
-        assertEquals(50, Calculator.mul(10, 5));
+        assertEquals(50, calc.mul(10, 5));
     }
 
     @Test
     void testDiv() {
-        assertEquals(2, Calculator.div(10, 5));
+        assertEquals(2, calc.div(10, 5));
+    }
+
+    @Test
+    void testDivideByZero() {
+        assertThrows(ArithmeticException.class, () -> calc.div(10, 0));
     }
 }
 #calculator.java
+package CalculatorProject;
+
 public class Calculator {
 
-    public static int add(int a, int b) {
-        return a + b;
-    }
+	    public int add(int a, int b) {
+	        return a + b;
+	    }
 
-    public static int sub(int a, int b) {
-        return a - b;
-    }
+	    public int sub(int a, int b) {
+	        return a - b;
+	    }
 
-    public static int mul(int a, int b) {
-        return a * b;
-    }
+	    public int mul(int a, int b) {
+	        return a * b;
+	    }
 
-    public static int div(int a, int b) {
-        return a / b;
-    }
-}
+	    public int div(int a, int b) {
+	        if (b == 0) {
+	            throw new ArithmeticException("Cannot divide by zero");
+	        }
+	        return a / b;
+	    }
+	}
 
 #19th
 docker build -t java-app .
@@ -228,45 +247,55 @@ pipeline {
         }
     }
 }
+19th another method 
+for that dockerfile and grade.java file
+public class Grade {
+
+  static char gradeFunction(double avg) {
+    if (avg >= 90) return 'A';
+    else if (avg >= 80) return 'B';
+    else if (avg >= 70) return 'C';
+    else if (avg >= 60) return 'D';
+    else return 'F';
+  }
+
+  public static void main(String[] args) {
+
+    // Fixed grades (no user input)
+    double[] grades = {85, 90, 78};
+
+    double sum = 0.0;
+    for (double g : grades) {
+      sum += g;
+    }
+
+    double avg = sum / grades.length;
+
+    System.out.println("Average: " + avg);
+    System.out.println("Letter grade: " + gradeFunction(avg));
+  }
+}
 #16
-docker build -t my-python-app
-docker images
-docker run my-python-app
-docker run -p 5000:5000 my-python-app
-browser
-app.py
-from http.server import BaseHTTPRequestHandler, HTTPServer
-
-PORT = 5000
-
-class MyHandler(BaseHTTPRequestHandler):
-
-    def do_GET(self):
-        # Send response status
-        self.send_response(200)
-
-        # Send headers
-        self.send_header("Content-type", "text/html")
-        self.end_headers()
-
-        # Send response body
-        self.wfile.write(b"<h1>Hello from Python HTTP Server</h1>")
-        self.wfile.write(b"<p>This is running on port 5000</p>")
-
-
-if __name__ == "__main__":
-    server = HTTPServer(("0.0.0.0", PORT), MyHandler)
-    print(f"Server running on http://localhost:{PORT}")
-    server.serve_forever()
-docker build -t my-python-app
-docker run -d -p 5000:5000 my-python-app
-
 dockerfile
 FROM openjdk:17
 WORKDIR /app
 COPY . /app
 RUN javac Sample.java
 CMD ["java", "Sample"]
+
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+COPY . /app
+RUN javac Grade.java
+CMD ["java", "Grade"]
+Sample.java code
+public class Sample {
+    public static void main(String[] args) {
+        int a = 10;
+        int b = 5;
+        System.out.println("Sum = " + (a + b));
+    }
+}
 
 #bank code
 public class BankAccount {
