@@ -235,16 +235,14 @@ if __name__ == "__main__":
     server.serve_forever()
 docker build -t my-python-app
 docker run -d -p 5000:5000 my-python-app
+
 dockerfile
-FROM python:3.9-slim
-
+FROM openjdk:17
 WORKDIR /app
+COPY . /app
+RUN javac Sample.java
+CMD ["java", "Sample"]
 
-COPY app.py .
-
-EXPOSE 5000
-
-CMD ["python", "app.py"]
 #bank code
 public class BankAccount {
     private String accountNumber;
