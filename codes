@@ -203,6 +203,31 @@ public class Calculator {
 #19th
 docker build -t java-app .
 docker run -d -t java-app
+another method
+this code u paste
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/RBhoomikaJain14/exp19.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t java-app .'
+            }
+        }
+
+        stage('Run Container') {
+            steps {
+                bat 'docker run -d -it java-app'
+            }
+        }
+    }
+}
 #16
 docker build -t my-python-app
 docker images
