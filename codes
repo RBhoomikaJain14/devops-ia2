@@ -140,7 +140,7 @@ docker tag java-app bhoomikajain/java-app:v1
 docker push  bhoomikajain/java-app:v1
 docker run -it bhoomikajain/java-app:v1
 
-#exp12,11 calculatorInput(optional)
+#exp12,11 calculatorInput(optional)                                                   
 import java.util.Scanner;
 
 class CalculatorInput {
@@ -193,6 +193,38 @@ class CalculatorTest {
     void testDivideByZero() {
         assertThrows(ArithmeticException.class, () -> calc.div(10, 0));
     }
+}
+
+this is for junit4 
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class CalculatorTest {
+
+    @Test
+    public void testAdd() {
+        Calculator c = new Calculator();
+        assertEquals(15, c.add(10, 5));
+    }
+
+    @Test
+    public void testSub() {
+        Calculator c = new Calculator();
+        assertEquals(5, c.sub(10, 5));
+    }
+
+    @Test
+    public void testMul() {
+        Calculator c = new Calculator();
+        assertEquals(50, c.mul(10, 5));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDivByZero() {
+        Calculator c = new Calculator();
+        c.div(10, 0);
+    }
+}
 }
 #calculator.java
 package CalculatorProject;
@@ -382,6 +414,27 @@ class BankAccountTest {
         assertEquals("Withdrawal amount must be positive", exception.getMessage());
     }
 }
+
+this if for junit 4
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class BankServiceTest {
+
+    @Test
+    public void testDeposit() {
+        BankService b = new BankService(100);
+        b.deposit(50);
+        assertEquals(150, b.getBalance(), 0.0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testWithdrawFail() {
+        BankService b = new BankService(100);
+        b.withdraw(200);
+    }
+}
+
 #linear search
 public class LinearSearch {
 
